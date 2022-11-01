@@ -1,20 +1,27 @@
 import { useState } from "react";
-import { AddCategory } from "./components/AddCategory";
+import { AddCategory, GifGrid } from "./components";
 
 export const GifFinderApp = () => {
-  const [categories, setCategories] = useState(['One Punch','buru']);
-  const onAddCategory = ()=>{
-    setCategories([...categories, 'Valoshit']);
+  const [categories, setCategories] = useState(['']);
+  const onAddCategory = (newCategory)=>{
+    if(categories.includes(newCategory)){
+      return ;
+    }
+    setCategories([newCategory,...categories]);
   }
 
   return (
     <div>
         <h1>GifFinderApp</h1>
-        <button onClick={onAddCategory}>Agregar</button>
-        <AddCategory setCategories={setCategories} categories={categories}/>
+        <AddCategory 
+          onNewCategory = {onAddCategory}
+        />
         <ol>
-          {categories.map(categorie=>{
-            return <li key={categorie}>{categorie}</li>
+          {categories.map((category)=>{
+            return <GifGrid 
+                    key={category} 
+                    category={category}
+                    />
           })}
         </ol>
         </div>
